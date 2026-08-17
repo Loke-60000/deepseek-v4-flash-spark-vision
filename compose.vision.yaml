@@ -5,7 +5,7 @@
 # Separate service name + port so the working text endpoint is untouched.
 services:
   deepseek-vision:
-    image: deepseek-v4-flash-sparkinfer:eagle3
+    image: ghcr.io/loke-60000/deepseek-v4-flash-spark-vision:latest
     container_name: deepseek-vision
     restart: "no"
     network_mode: host
