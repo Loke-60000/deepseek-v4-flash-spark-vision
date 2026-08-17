@@ -53,8 +53,7 @@ Any OpenAI client works. Pass `image_url` content parts holding a `data:` URI.
 
 `MODE: dspark`. With `MODE=off` the engine dies on `swa_k_cache page stride
 37376 is smaller than DSV4 page width 37440`, which also happens on the plain
-text model with no vision plugin loaded. Reported as
-[SparkInfer issue #4](https://github.com/0xSero/deepseek-v4-flash-0731-spark-sparkinfer/issues/4).
+text model with no vision plugin loaded.
 
 `MAX_MODEL_LEN: 262144`. The same crash appears at 16384.
 
@@ -65,8 +64,7 @@ budget, so at 0.93 the engine asks for 7.93 GiB of KV cache and finds 7.53.
 
 `patch_eagle3.py` makes the vision wrapper forward the EAGLE3 interface.
 Without it DSpark refuses the model with `RuntimeError: Model does not support
-EAGLE3 interface`. The published image already has it. Sent upstream as
-[FlyCockpit PR #1](https://github.com/FlyCockpit/DeepSeek-V4-Vision-2x-DGX-Sparks/pull/1).
+EAGLE3 interface`. The published image already has it.
 
 `scripts/palette_check.py` maps a routing palette through the backbone's
 `tid2eid` tables and counts how many of the 216 surviving experts it reaches.
