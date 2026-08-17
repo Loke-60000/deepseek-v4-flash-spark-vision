@@ -1,0 +1,46 @@
+# Runs the SAME container as the text service, but with the vision wrapper:
+#   - image carries the FlyCockpit plugin
+#   - MODEL_PATH points at tp1-vision (symlinks + architectures=DeepseekV4VisionForCausalLM)
+#   - tower/adapter supplied via the plugin env vars
+# Separate service name + port so the working text endpoint is untouched.
+services:
+  deepseek-vision:
+    image: deepseek-v4-flash-sparkinfer:eagle3
+    container_name: deepseek-vision
+    restart: "no"
+    network_mode: host
+    ipc: host
+    shm_size: 16gb
+    environment:
+      HF_TOKEN: ${HF_TOKEN:-}
+      MODEL_REPO: 0xSero/deepseek-v4-flash-0731-spark
+      MODEL_PATH: /models/tp1-vision
+      SERVED_MODEL_NAME: deepseek-v4-flash-0731-spark
+      VLLM_PORT: "8010"
+      MAX_MODEL_LEN: "262144"
+      MAX_NUM_SEQS: "4"
+      MAX_NUM_BATCHED_TOKENS: "8224"
+      GPU_MEMORY_UTILIZATION: "0.945"
+      MODE: dspark
+      DSPARK_STRUCTURED_EXPERTS_PER_CATEGORY: "32"
+      DSPARK_DRAFT_EXPERTS: "64"
+      DSPARK_DYNAMIC_DRAFT_DEPTH_WINDOW: "8"
+      DSPARK_DYNAMIC_DRAFT_DEPTH: "0"
+      DSPARK_CAPACITY: "0"
+      DSPARK_TOKENS: "5"
+      VLLM_USE_B12X_WO_PROJECTION: "1"
+      VERIFY_MODEL_CHECKSUMS: "0"
+      DSV4_VISION_TOWER: /vision/tower/deepencoder_v2_tower.safetensors
+      DSV4_VISION_ADAPTER: /vision/adapter/merged-004800-5af0c5.pt
+      DSV4_VISION_TILES: "2"
+    volumes:
+      - ./data:/models
+      - ./cache:/cache
+      - ./vision-assets:/vision
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

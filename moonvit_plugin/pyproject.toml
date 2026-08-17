@@ -1,0 +1,11 @@
+[project]
+name = "dsv4-moonvit-vllm"
+version = "0.1.0"
+requires-python = ">=3.10"
+
+[project.entry-points."vllm.general_plugins"]
+dsv4_moonvit = "dsv4_moonvit_vllm:register"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"

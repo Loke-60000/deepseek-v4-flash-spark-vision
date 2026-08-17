@@ -1,0 +1,6 @@
+data/
+vision-assets/
+cache/
+*.safetensors
+*.pt
+__pycache__/

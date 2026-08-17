@@ -1,0 +1,3 @@
+FROM deepseek-v4-flash-sparkinfer:vision
+COPY patch_eagle3.py /tmp/patch_eagle3.py
+RUN /opt/runtime-venv/bin/python /tmp/patch_eagle3.py  && /opt/runtime-venv/bin/python -c "import dsv4_vision_vllm.model as m; c=m.DeepseekV4VisionForCausalLM; print(\"supports_eagle3:\", getattr(c,\"supports_eagle3\",None)); print(\"has setter:\", hasattr(c,\"set_aux_hidden_state_layers\"))"

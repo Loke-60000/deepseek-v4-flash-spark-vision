@@ -1,0 +1,12 @@
+# Vision on a single Spark: layer FlyCockpit DeepEncoderV2 plugin onto the
+# existing toolfix image. Their playbook targets 2x Spark with the FP8 backbone;
+# this points the same wrapper at the REAP-pruned EXL3 build instead.
+#
+# The wrapper works because SparkInfer vLLM has requires_raw_input_tokens, so
+# input_ids still reach the HashRouter (tid2eid) while inputs_embeds carries the
+# image rows. Open question is quality: REAP compacted 256->216 experts, so the
+# image token routes differently than the adapter was trained against.
+FROM deepseek-v4-flash-sparkinfer:toolfix
+COPY vision-plugin /opt/vision-plugin
+RUN /opt/runtime-venv/bin/pip install --no-deps -e /opt/vision-plugin \
+ && /opt/runtime-venv/bin/python -c "import dsv4_vision_vllm; print(\"plugin import OK\")"
