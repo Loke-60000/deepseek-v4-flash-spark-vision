@@ -23,9 +23,6 @@ on:
     tags:
       - "v*"
 
-env:
-  IMAGE: ghcr.io/${{ github.repository_owner }}/deepseek-v4-flash-spark-vision
-
 jobs:
   build:
     runs-on: ${{ github.event.inputs.runner_label || 'ubuntu-24.04-arm' }}
@@ -34,6 +31,13 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v4
+
+      # GHCR rejects uppercase; the owner is Loke-60000.
+      - name: Resolve image name
+        run: |
+          owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          echo "IMAGE=ghcr.io/$owner/deepseek-v4-flash-spark-vision" >> "$GITHUB_ENV"
+          echo "image: ghcr.io/$owner/deepseek-v4-flash-spark-vision"
 
       - name: Free disk
         run: |
