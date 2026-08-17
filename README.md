@@ -1,3 +1,5 @@
+![Deepseek v4 flash 0731 Vision](banner.png)
+
 # deepseek-v4-flash-spark-vision
 
 Adds image input to [`0xSero/deepseek-v4-flash-0731-spark`](https://huggingface.co/0xSero/deepseek-v4-flash-0731-spark)
