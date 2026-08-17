@@ -60,22 +60,6 @@ text model with no vision plugin loaded.
 `GPU_MEMORY_UTILIZATION: 0.945`. The tower takes about 0.9 GB out of the KV
 budget, so at 0.93 the engine asks for 7.93 GiB of KV cache and finds 7.53.
 
-## What else is here
-
-`patch_eagle3.py` makes the vision wrapper forward the EAGLE3 interface.
-Without it DSpark refuses the model with `RuntimeError: Model does not support
-EAGLE3 interface`. The published image already has it.
-
-`scripts/palette_check.py` maps a routing palette through the backbone's
-`tid2eid` tables and counts how many of the 216 surviving experts it reaches.
-
-`scripts/calib_local.py` compares the projector's output norm against
-`embed.weight`. The rescale it writes makes output worse; the numbers are on the
-model card.
-
-`moonvit_plugin/` pairs the backbone with the MoonViT tower from
-[`webbrain-one/DeepSeek-V4-Flash-0731-Vision-NVFP4`](https://huggingface.co/webbrain-one/DeepSeek-V4-Flash-0731-Vision-NVFP4)
-instead. It has never been run.
 
 ## Licenses
 
