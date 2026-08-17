@@ -11,7 +11,20 @@ from [`FlyCockpit/DeepSeek-V4-Flash-0731-vision`](https://huggingface.co/FlyCock
 Measurements, model provenance, and the quality limits are on the Hugging Face
 side: [Loke-60000/deepseek-v4-flash-0731-spark-vision-exp](https://huggingface.co/Loke-60000/deepseek-v4-flash-0731-spark-vision-exp)
 
-## Build and run
+## Pull the prebuilt image
+
+```bash
+docker pull ghcr.io/loke-60000/deepseek-v4-flash-spark-vision:latest
+```
+
+arm64 only, built for GB10. It carries the SparkInfer runtime, the xgrammar
+fix, the FlyCockpit plugin, and the EAGLE3 patch, so nothing needs building.
+Point `compose.vision.yaml` at it by setting `image:` to that tag, then supply
+the model directory, tower, and adapter as below. `.github/workflows/publish-image.yml`
+builds it; the base layer is about 21.7 GB, so the job wants an arm64 machine
+with real disk rather than a hosted runner.
+
+## Build it yourself
 
 ```bash
 # model directory: symlinks to the backbone shards plus a patched config.json
